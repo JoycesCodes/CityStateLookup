@@ -21,6 +21,7 @@ window.onload = function () {
     loadStateSelection();
     loadCitySelection();
     document.getElementById("stateSelection").onchange = loadCitySelection;
+    document.getElementById("citySelection").onchange = loadCityStatePara;
 }
 
 const citySelectionDropdown = document.getElementById("citySelection");
@@ -55,6 +56,8 @@ function loadCitySelection() {
     }
     let matchingState = cityStates.find(arrayElement => arrayElement.stateAbbr === stateSelected);
     if (matchingState !== null) {
+        let selectCityOption = new Option("Select a City...","");
+        citySelectionDropdown.appendChild(selectCityOption);
         for (let i = 0; i < matchingState.cities.length; i++) {
             let cityOptions = document.createElement("option");
             // cityOptions.textContent = matchingState.cities[i];
@@ -64,4 +67,19 @@ function loadCitySelection() {
             citySelectionDropdown.appendChild(cityOptions);
         }
     }
+}
+
+function loadCityStatePara(){
+    const cityStatePara = document.getElementById("cityStatePara");
+    cityStatePara.innerHTML = "";
+    let stateSelected = stateSelectionDropdown.value;
+    let citySelected = citySelectionDropdown.value;
+    if(stateSelected === ""){
+        return;
+    }
+    let selectedStateIndex = stateSelectionDropdown.selectedIndex;
+    let selectedState = stateSelectionDropdown.options[selectedStateIndex].text;
+
+    cityStatePara.innerHTML = citySelected+", "+selectedState;
+
 }
