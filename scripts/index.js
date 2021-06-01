@@ -20,39 +20,48 @@ let cityStates = [{
 window.onload = function () {
     loadStateSelection();
     loadCitySelection();
+    document.getElementById("stateSelection").onchange = loadCitySelection;
 }
 
+const citySelectionDropdown = document.getElementById("citySelection");
+const stateSelectionDropdown = document.getElementById("stateSelection");
+
+//function to create list of states from the array
 function loadStateSelection() {
-    const stateSelectionDropdown = document.getElementById("stateSelection");
     let selectOneOption = new Option("Select One... ", "");
     stateSelectionDropdown.appendChild(selectOneOption);
 
     let length = cityStates.length;
     for (let i = 0; i < length; i++) {
         let stateOption = document.createElement("option");
-        stateOption.textContent = cityStates[i].state;
-        stateOption.value = cityStates[i].stateAbbr;
-
+        // stateOption.textContent = cityStates[i].state;
+        // stateOption.value = cityStates[i].stateAbbr;
+        // changed to abbr. version to practice
+        stateOption = new Option(cityStates[i].state, cityStates[i].stateAbbr)
         stateSelectionDropdown.appendChild(stateOption);
     }
 }
 
+//onchange function
 function loadCitySelection() {
-    const citySelectionDropdown = document.getElementById("citySelection");
-    const stateSelectionDropdown = document.getElementById("stateSelection");
-    // let stateSelected = cityStates.find(arrayElement => arrayElement.stateAbbr == stateSelectionDropdown.value);
+    //city selection is always empty until something is changed
     let stateSelected = stateSelectionDropdown.value;
-    console.log(stateSelected);
-    let matchingState = cityStates.find(arrayElement => arrayElement.stateAbbr == stateSelected);
+    citySelectionDropdown.length = 0;
 
-    if (matchingState != "") {
+    //alert to ensure that a proper state is selected
+    if (stateSelected === "") {
+        alert("Please select a state to view its cities.");
+        return;
+    }
+    let matchingState = cityStates.find(arrayElement => arrayElement.stateAbbr === stateSelected);
+    if (matchingState !== null) {
         for (let i = 0; i < matchingState.cities.length; i++) {
             let cityOptions = document.createElement("option");
-            cityOptions.textContent = matchingState.cities[i];
-            citySelectionDropdown.appendChild("cityOptions");
+            // cityOptions.textContent = matchingState.cities[i];
+            // cityOptions.value = matchingState.cities[i];
+            // changed to abbr. version to practice
+            cityOptions = new Option(matchingState.cities[i], matchingState[i])
+            citySelectionDropdown.appendChild(cityOptions);
         }
-    } else {
-        alert = "Please select a valid state";
-        return;
     }
 }
