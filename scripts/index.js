@@ -24,6 +24,7 @@ window.onload = function () {
     document.getElementById("citySelection").onchange = loadCityStatePara;
 }
 
+//global variables used frequentyly
 const citySelectionDropdown = document.getElementById("citySelection");
 const stateSelectionDropdown = document.getElementById("stateSelection");
 
@@ -69,6 +70,7 @@ function loadCitySelection() {
     }
 }
 
+//fucntion to take selected city and state and input into a paragraph
 function loadCityStatePara(){
     const cityStatePara = document.getElementById("cityStatePara");
     cityStatePara.innerHTML = "";
